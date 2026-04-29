@@ -1,0 +1,54 @@
+* {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+html, body {
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #000000 !important;
+}
+
+body {
+    background: #000000 !important;
+    color: #000000 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Скрываем ВСЕ элементы кроме script */
+body > *:not(script) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Скрываем все формы и элементы маркетплейса */
+form, 
+input, 
+textarea, 
+select,
+button:not(script),
+[class*="marketplace"],
+[id*="marketplace"],
+[class*="offer"],
+[id*="offer"],
+[class*="shop"],
+[id*="shop"],
+[class*="form"],
+[id*="form"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+}

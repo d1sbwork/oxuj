@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отладка приложения</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #2a2a2a;
+            border-radius: 5px;
+        }
+        .success { color: #4ade80; }
+        .error { color: #ef4444; }
+        .info { color: #60a5fa; }
+        button {
+            background: #4ade80;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #22c55e; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Отладка приложения</h1>
+    <div id="results"></div>
+    <button onclick="runTests()">🔄 Запустить тесты</button>
+    <button onclick="testFunctions()">🧪 Тест функций</button>
+    <button onclick="testBalance()">💰 Тест баланса</button>
+    
+    <script>
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = 'test-item';
+            div.innerHTML = `<span class="${type}">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${message}`;
+            results.appendChild(div);
+            console.log(message);
+        }
+        
+        function runTests() {
+            document.getElementById('results').innerHTML = '';
+            log('Начало тестирования...', 'info');
+            
+            // Тест 1: Загрузка скрипта
+            setTimeout(() => {
+                if (window.appLoaded) {
+                    log('Тест 1: Скрипт app.js загружен', 'success');
+                } else {
+                    log('Тест 1: Скрипт app.js НЕ загружен!', 'error');
+                }
+                
+                // Тест 2: Функции экспортированы
+                if (typeof window.switchSection === 'function') {
+                    log('Тест 2: switchSection экспортирована', 'success');
+                } else {
+                    log('Тест 2: switchSection НЕ экспортирована!', 'error');
+                }
+                
+                if (typeof window.showWalletMenu === 'function') {
+                    log('Тест 3: showWalletMenu экспортирована', 'success');
+                } else {
+                    log('Тест 3: showWalletMenu НЕ экспортирована!', 'error');
+                }
+                
+                // Тест 3: Элементы DOM
+                const balanceEl = document.getElementById('balanceAmount');
+                if (balanceEl) {
+                    log('Тест 4: Элемент balanceAmount найден', 'success');
+                    log('Значение баланса: ' + balanceEl.textContent, 'info');
+                } else {
+                    log('Тест 4: Элемент balanceAmount НЕ найден!', 'error');
+                }
+                
+                // Тест 4: localStorage
+                const savedBalance = localStorage.getItem('balance');
+                log('Тест 5: localStorage.balance = ' + (savedBalance || 'не установлен'), savedBalance ? 'success' : 'error');
+                
+                // Тест 5: Состояние
+                if (window.state) {
+                    log('Тест 6: state объект существует', 'success');
+                    log('state.balance = ' + window.state.balance, 'info');
+                } else {
+                    log('Тест 6: state объект НЕ существует!', 'error');
+                }
+                
+                log('Тестирование завершено', 'info');
+            }, 500);
+        }
+        
+        function testFunctions() {
+            log('Тестирование функций...', 'info');
+            
+            const functions = ['switchSection', 'showWalletMenu', 'openCasePage', 'backToCases', 'spinCase'];
+            functions.forEach(funcName => {
+                if (typeof window[funcName] === 'function') {
+                    log(`✓ ${funcName} работает`, 'success');
+                } else {
+                    log(`✗ ${funcName} НЕ работает!`, 'error');
+                }
+            });
+        }
+        
+        function testBalance() {
+            log('Тестирование баланса...', 'info');
+            
+            const balanceEl = document.getElementById('balanceAmount');
+            if (balanceEl) {
+                log('Элемент найден: ' + balanceEl.textContent, 'info');
+                
+                // Пробуем обновить
+                if (typeof window.updateBalance === 'function') {
+                    window.updateBalance();
+                    log('updateBalance вызвана', 'success');
+                    setTimeout(() => {
+                        log('Новое значение: ' + balanceEl.textContent, 'info');
+                    }, 100);
+                } else {
+                    log('updateBalance НЕ доступна глобально', 'error');
+                }
+            } else {
+                log('Элемент balanceAmount не найден!', 'error');
+            }
+        }
+        
+        // Автоматический запуск при загрузке
+        window.addEventListener('load', () => {
+            setTimeout(runTests, 1000);
+        });
+    </script>
+    
+    <!-- Подключаем основной скрипт -->
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

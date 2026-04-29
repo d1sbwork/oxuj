@@ -1,0 +1,2788 @@
+/* ========== ОСНОВНЫЕ СТИЛИ ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #1a1a2e;
+    background-image: url('images/newyear_background.jpg.jpg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #ffffff;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Fallback если фон не загрузился */
+body:not([data-bg-loaded]) {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body {
+    position: relative;
+}
+
+/* ========== ЗАГРУЗОЧНЫЙ ЭКРАН ========== */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a2e;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.splash-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.splash-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.splash-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: #1a1a2e;
+}
+
+.splash-loader {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    margin-bottom: 80px;
+}
+
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========== АНИМАЦИЯ НАДПИСИ GIFTS ========== */
+.gifts-stripes-container {
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.gifts-stripe {
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 20%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        rgba(255, 255, 255, 0.1) 80%, 
+        transparent 100%);
+    left: 0;
+    top: 0;
+}
+
+.gifts-stripe-1 {
+    top: 20px;
+    animation: stripeMove 3s linear infinite;
+}
+
+.gifts-stripe-2 {
+    top: 70px;
+    animation: stripeMove 3s linear infinite 0.5s;
+}
+
+.gifts-stripe-3 {
+    top: 120px;
+    animation: stripeMove 3s linear infinite 1s;
+}
+
+.gifts-text-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.gifts-text {
+    position: absolute;
+    top: 50%;
+    font-size: 60px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(255, 255, 255, 0.6),
+        0 0 20px rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+    letter-spacing: 8px;
+    animation: giftsTextMove 6s linear infinite;
+    pointer-events: none;
+}
+
+.gifts-text:first-child {
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.gifts-text-duplicate {
+    left: 100%;
+    transform: translateY(-50%);
+    animation: giftsTextMoveDuplicate 6s linear infinite;
+}
+
+@keyframes stripeMove {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes giftsTextMove {
+    0% {
+        transform: translateX(0) translateY(-50%);
+    }
+    100% {
+        transform: translateX(-100%) translateY(-50%);
+    }
+}
+
+@keyframes giftsTextMoveDuplicate {
+    0% {
+        transform: translateX(0) translateY(-50%);
+    }
+    100% {
+        transform: translateX(-100%) translateY(-50%);
+    }
+}
+
+/* Адаптация для мобильных */
+@media screen and (max-width: 768px) {
+    .gifts-text {
+        font-size: 50px;
+        letter-spacing: 5px;
+    }
+    
+    .gifts-stripes-container {
+        height: 150px;
+    }
+    
+    .gifts-stripe {
+        height: 40px;
+    }
+    
+    .gifts-stripe-1 {
+        top: 15px;
+    }
+    
+    .gifts-stripe-2 {
+        top: 55px;
+    }
+    
+    .gifts-stripe-3 {
+        top: 95px;
+    }
+}
+
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #1a1a2e;
+    background-image: url('images/newyear_background.jpg.jpg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* ========== ВЕРХНЯЯ ПАНЕЛЬ ========== */
+.wins-bar {
+    width: 100%;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wins-track {
+    display: flex;
+    gap: 20px;
+    padding: 8px 16px;
+    white-space: nowrap;
+    animation: scroll-wins 30s linear infinite;
+}
+
+@keyframes scroll-wins {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.online-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.online-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.online-text {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.wallet-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.wallet-btn:active {
+    transform: scale(0.95);
+}
+
+.wallet-icon {
+    font-size: 16px;
+}
+
+.wallet-balance {
+    font-weight: 700;
+}
+
+/* ========== КОНТЕНТ ========== */
+.content-area {
+    width: 100%;
+    min-height: calc(100vh - 100px);
+    height: auto;
+    position: relative;
+    overflow-y: auto;
+    padding-bottom: 200px; /* Дополнительное место для нижней навигации */
+}
+
+.section {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: transparent;
+    /* Вертикальный layout как в Telegram мини-приложении */
+    flex-direction: column;
+}
+
+.section.active {
+    display: flex !important;
+}
+
+.section-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 10px;
+    background: url('images/newyear_background.jpg.jpg') center center / cover no-repeat fixed;
+    background-color: #1a1a2e;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.section-subtitle {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+.back-btn {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: background 0.2s;
+}
+
+.back-btn:active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ========== ИНВЕНТАРЬ ========== */
+.inventory-container {
+    width: 100%;
+}
+
+.inventory-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.empty-inventory {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+/* ========== КЕЙСЫ ========== */
+.cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.case-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.case-card:active {
+    transform: scale(0.95);
+}
+
+.case-box {
+    width: 100%;
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    background-size: cover;
+    background-position: center;
+}
+
+.case-icon {
+    font-size: 48px;
+}
+
+.case-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #ffffff;
+}
+
+.case-price {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ========== БИТВЫ ========== */
+.battles-section-content {
+    width: 100%;
+    padding: 10px;
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: url('images/newyear_background.jpg.jpg') center center / cover no-repeat fixed;
+    background-color: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+}
+
+.battles-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.battle-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 2px solid transparent;
+}
+
+.battle-card:active {
+    transform: scale(0.98);
+}
+
+.battle-card.active {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.battle-card-icon {
+    font-size: 32px;
+}
+
+.battle-card-text {
+    flex: 1;
+}
+
+.battle-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.battle-card-subtitle {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.battle-card-dice {
+    background: linear-gradient(90deg, #7c3aed, #ec4899);
+}
+
+.battle-card-mineboom {
+    background: linear-gradient(90deg, #8B4513, #CD853F);
+}
+
+.battle-card-wheel {
+    background: linear-gradient(90deg, #22c55e, #06b6d4);
+}
+
+/* ========== КОСТИ ========== */
+.battles-game-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    flex: 1;
+}
+
+.dice-display {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.dice-cube {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-style: preserve-3d;
+}
+
+.dice-cube.rolling {
+    animation: diceRoll 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes diceRoll {
+    0% { transform: rotateX(0) rotateY(0) scale(1); }
+    25% { transform: rotateX(90deg) rotateY(90deg) scale(1.1); }
+    50% { transform: rotateX(180deg) rotateY(180deg) scale(1.2); }
+    75% { transform: rotateX(270deg) rotateY(270deg) scale(1.1); }
+    100% { transform: rotateX(360deg) rotateY(360deg) scale(1); }
+}
+
+.dice-cube-inner {
+    font-size: 64px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.dice-info {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.dice-countdown {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 20px 0;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.dice-choose {
+    margin: 20px 0;
+}
+
+.dice-choose-label {
+    display: block;
+    text-align: center;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.dice-choose-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.dice-choose-btn {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dice-choose-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #ffffff;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+}
+
+.dice-bet-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.dice-bet-icon {
+    font-size: 20px;
+}
+
+.dice-bet-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+}
+
+.dice-bet-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.dice-add-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.dice-add-btn {
+    flex: 1;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.2s;
+}
+
+.dice-add-btn:active {
+    transform: scale(0.95);
+}
+
+.dice-add-icon {
+    font-size: 18px;
+}
+
+.dice-participants {
+    margin-top: 24px;
+}
+
+.dice-participants-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dice-participants-list {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    min-height: 100px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dice-participants-empty {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 20px;
+    font-size: 14px;
+}
+
+.dice-participant-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dice-participant-row:last-child {
+    border-bottom: none;
+}
+
+.dice-participant-name {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+.dice-participant-bet {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+
+/* ========== КОЛЕСО ========== */
+.wheel-section-content {
+    background: url('images/newyear_background.jpg.jpg') center center / cover no-repeat fixed;
+    background-color: #1a1a2e;
+    min-height: 100vh;
+    height: auto;
+    padding: 10px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.wheel-timer-box {
+    text-align: center;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+.wheel-timer {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #FFD700;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 900;
+    color: #8B0000;
+    text-shadow: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+}
+
+.wheel-game-field {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto 10px;
+    aspect-ratio: 1;
+    padding: 5px;
+    /* Вертикальный layout - колесо занимает всю ширину */
+    max-width: 100%;
+    max-height: 60vh;
+    flex-shrink: 0;
+}
+
+.wheel-pointer-top {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+    /* Стрелка касается колеса - убрана постоянная анимация */
+}
+
+@keyframes pointer-sway {
+    0%, 100% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    25% {
+        transform: translateX(-50%) rotate(-2deg);
+    }
+    75% {
+        transform: translateX(-50%) rotate(2deg);
+    }
+}
+
+/* Анимация толчка стрелки при смене цвета */
+@keyframes pointer-push {
+    0% {
+        transform: translateX(-50%) rotate(0deg) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) rotate(-5deg) translateY(3px);
+    }
+    100% {
+        transform: translateX(-50%) rotate(0deg) translateY(0);
+    }
+}
+
+.wheel-pointer-top.pushing {
+    animation: pointer-push 0.3s ease-out;
+}
+
+.wheel-pointer-arrow {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 30px solid #FFD700;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.wheel-pointer-arrow::after {
+    content: '';
+    position: absolute;
+    top: -45px;
+    left: -18px;
+    width: 0;
+    height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-top: 35px solid #FFA500;
+    z-index: -1;
+}
+
+.wheel-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.wheel-svg {
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    transition: transform 0.1s linear;
+    transform: rotate(-90deg);
+}
+
+.wheel-svg.spinning {
+    animation: spin-wheel 10s cubic-bezier(0.15, 0.1, 0.05, 1) forwards;
+}
+
+@keyframes spin-wheel {
+    from {
+        transform: rotate(-90deg);
+    }
+    to {
+        transform: rotate(calc(var(--final-rotation, 0deg) - 90deg));
+    }
+}
+
+.wheel-center-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15%;
+    height: 15%;
+    background: #FFD700;
+    border: 4px solid #FFA500;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    box-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.8),
+        inset 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.wheel-center-text {
+    font-size: 14px;
+    font-weight: 900;
+    color: #8B0000;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+}
+
+.wheel-bet-input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 6px 8px;
+    margin-bottom: 5px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wheel-action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-shrink: 0;
+}
+
+.wheel-action-btn {
+    flex: 1;
+    padding: 14px 20px;
+    background: #8B0000;
+    border: 3px solid #FFD700;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.wheel-action-btn:hover {
+    background: #A00000;
+    box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.wheel-action-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.wheel-add-gift-btn {
+    flex: 1;
+    padding: 14px 20px;
+    background: #8B0000;
+    border: 3px solid #FFD700;
+    border-radius: 12px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.wheel-add-gift-btn:hover {
+    background: #A00000;
+    box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.wheel-add-gift-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.wheel-btn-icon {
+    font-size: 20px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.wheel-btn-text {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.wheel-players-section {
+    margin-top: 5px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.wheel-players-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #FFFFFF;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.wheel-players-list {
+    background: #8B0000;
+    border: 3px solid #FFD700;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px;
+    min-height: 100px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.wheel-player-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.wheel-player-name {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+}
+
+.wheel-player-bet {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+}
+
+.wheel-player-percent {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.wheel-percent-bars {
+    display: flex;
+    gap: 2px;
+    margin-top: 6px;
+    height: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+@keyframes spin-wheel {
+    from {
+        transform: rotate(-90deg);
+    }
+    to {
+        transform: rotate(calc(var(--final-rotation, 0deg) - 90deg));
+    }
+}
+
+/* ========== ЛЕСТНИЦА ========== */
+.ladder-section-content {
+    width: 100%;
+    padding: 10px;
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    background: url('images/newyear_background.jpg.jpg') center center / cover no-repeat fixed;
+    background-color: #1a1a2e;
+}
+
+.ladder-game-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.ladder-game-field {
+    width: 100%;
+    aspect-ratio: 0.7;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+    max-width: 100%;
+    max-height: 70vh;
+    flex-shrink: 0;
+}
+
+.ladder-multiplier-display {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    text-align: center;
+}
+
+.multiplier-big {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.ladder-countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+}
+
+.countdown-number {
+    font-size: 72px;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 1);
+}
+
+.ladder-bet-input-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.ladder-bet-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none;
+}
+
+.bet-input-icon {
+    font-size: 20px;
+}
+
+/* ========== КОШЕЛЕК ========== */
+.wallet-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.wallet-menu.active {
+    display: flex;
+}
+
+.wallet-menu-content {
+    background: #1a1a2e;
+    border-radius: 20px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.wallet-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.wallet-menu-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.wallet-close-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wallet-topup-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.wallet-topup-btn {
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.wallet-topup-btn:active {
+    transform: scale(0.95);
+}
+
+/* ========== MINEBOOM GAME STYLES ========== */
+.mineboom-section-content {
+    background: url('images/newyear_background.jpg.jpg') center center / cover no-repeat fixed;
+    background-color: #1a1a2e;
+    min-height: 100vh;
+    height: auto;
+    padding: 10px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    /* Убираем все анимации */
+    animation: none !important;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.mineboom-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    position: relative;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    min-height: 100vh;
+    height: auto;
+    max-width: 100%;
+    width: 100%;
+    overflow: visible;
+    /* Поле растягивается на весь фон */
+    /* Убираем черный фон */
+    background-color: transparent;
+    flex: 1;
+}
+
+/* Кирпичная стена внизу - убрана */
+.mineboom-field::before {
+    display: none !important;
+}
+
+/* Золотая платформа/выступ - убрана */
+.mineboom-field::after {
+    display: none !important;
+}
+
+
+.mineboom-blocks-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;
+    position: absolute;
+    bottom: 20vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    margin: 0 auto;
+    /* Блоки чуть выше, чтобы не охватывали доски */
+    padding-bottom: 0;
+    margin-bottom: 0;
+    /* Блоки должны быть на фоне, а не на черном экране */
+    background: transparent;
+}
+
+.mineboom-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    filter: none;
+    margin: 0;
+    /* Все элементы на одном уровне */
+    align-items: center;
+    /* Убираем все обводки */
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.mineboom-block:hover {
+    transform: translateY(-5px);
+}
+
+.mineboom-block.selected {
+    transform: translateY(-10px) scale(1.05);
+}
+
+.mineboom-block.selected .mineboom-block-tnt {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    animation: mineboom-pulse 1s infinite;
+}
+
+.mineboom-block.exploded {
+    animation: mineboom-explode 0.5s ease-out;
+}
+
+.mineboom-block-base {
+    width: 70px;
+    height: 70px;
+    border: none !important;
+    border-radius: 0;
+    position: relative;
+    box-shadow: none !important;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    /* Обрезка изображений блоков */
+    overflow: hidden;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    /* Чистый блок без обводок и рамок */
+    outline: none !important;
+    /* Убираем все возможные обводки */
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    /* Убираем все границы и обводки */
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    /* Убираем обводки от изображений */
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* TNT висит сверху над блоком, ближе к небу */
+.mineboom-block-tnt-hanging {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: -30vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.mineboom-block-tnt {
+    width: 60px;
+    height: 60px;
+    background: #FF0000;
+    border: 5px solid #000;
+    border-radius: 0;
+    position: relative;
+    cursor: pointer;
+    z-index: 2;
+    box-shadow: 
+        inset 0 0 0 3px #8B0000,
+        inset 0 0 0 6px #FF0000,
+        inset 0 2px 4px rgba(0,0,0,0.4),
+        inset 0 -2px 4px rgba(255,255,255,0.2),
+        0 8px 16px rgba(0,0,0,0.8),
+        0 0 0 2px rgba(0,0,0,0.5);
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mineboom-block-tnt:hover {
+    transform: scale(1.1);
+    box-shadow: 
+        inset 0 0 0 3px #8B0000,
+        inset 0 0 0 6px #FF0000,
+        inset 0 2px 4px rgba(0,0,0,0.4),
+        inset 0 -2px 4px rgba(255,255,255,0.2),
+        0 8px 16px rgba(0,0,0,0.8),
+        0 0 0 2px rgba(0,0,0,0.5),
+        0 0 30px rgba(255, 0, 0, 0.6);
+}
+
+.mineboom-block-tnt::before {
+    content: 'TNT';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 20px;
+    text-shadow: 
+        3px 0 0 #000,
+        -3px 0 0 #000,
+        0 3px 0 #000,
+        0 -3px 0 #000,
+        3px 3px 0 #000,
+        -3px -3px 0 #000,
+        3px -3px 0 #000,
+        -3px 3px 0 #000,
+        2px 0 0 #000,
+        -2px 0 0 #000,
+        0 2px 0 #000,
+        0 -2px 0 #000;
+    letter-spacing: 4px;
+    font-family: 'Courier New', monospace;
+    font-style: normal;
+    text-stroke: 2px #000;
+    -webkit-text-stroke: 2px #000;
+    z-index: 1;
+}
+
+.mineboom-tnt-price {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-shadow: 
+        2px 0 0 #000,
+        -2px 0 0 #000,
+        0 2px 0 #000,
+        0 -2px 0 #000,
+        1px 1px 0 #000,
+        -1px -1px 0 #000;
+    font-family: 'Courier New', monospace;
+    z-index: 2;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.mineboom-tnt-price::before {
+    content: '⭐';
+    margin-right: 3px;
+    font-size: 14px;
+}
+
+/* Падающий динамит */
+.mineboom-dynamite-falling {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.mineboom-dynamite-falling .dynamite-body {
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    text-align: center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+    transition: filter 0.2s;
+}
+
+/* Взрыв */
+.mineboom-explosion {
+    position: absolute;
+    font-size: 80px;
+    z-index: 25;
+    pointer-events: none;
+    animation: explosion-pop 0.5s ease-out;
+}
+
+@keyframes explosion-pop {
+    0% { transform: scale(0); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.8; }
+    100% { transform: scale(2); opacity: 0; }
+}
+
+/* Вылетающий подарок */
+.mineboom-gift-flying {
+    position: absolute;
+    font-size: 40px;
+    z-index: 30;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+}
+
+/* Текстуры блоков Minecraft - пиксельные как в игре */
+.mineboom-block-dirt {
+    background: #8B4513;
+    background-image: 
+        /* Трава сверху */
+        linear-gradient(0deg, 
+            #7CB342 0%, #7CB342 10%,
+            transparent 10%, transparent 100%
+        ),
+        /* Текстура земли */
+        repeating-linear-gradient(0deg, 
+            #8B4513 0px, #8B4513 4px,
+            #654321 4px, #654321 8px,
+            #8B4513 8px, #8B4513 12px,
+            #6B4423 12px, #6B4423 16px,
+            #8B4513 16px, #8B4513 20px,
+            #7B5433 20px, #7B5433 24px,
+            #8B4513 24px, #8B4513 28px,
+            #5A3A1A 28px, #5A3A1A 32px
+        ),
+        repeating-linear-gradient(90deg, 
+            #8B4513 0px, #8B4513 4px,
+            #654321 4px, #654321 8px,
+            #8B4513 8px, #8B4513 12px,
+            #6B4423 12px, #6B4423 16px,
+            #8B4513 16px, #8B4513 20px,
+            #7B5433 20px, #7B5433 24px,
+            #8B4513 24px, #8B4513 28px,
+            #5A3A1A 28px, #5A3A1A 32px
+        );
+    background-size: 100% 100%, 32px 32px, 32px 32px;
+    box-shadow: none;
+}
+
+.mineboom-block-stone {
+    background: #808080;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #808080 0px, #808080 2px,
+            #696969 2px, #696969 4px,
+            #808080 4px, #808080 6px,
+            #5A5A5A 6px, #5A5A5A 8px,
+            #808080 8px, #808080 10px,
+            #909090 10px, #909090 12px,
+            #808080 12px, #808080 14px,
+            #707070 14px, #707070 16px,
+            #808080 16px, #808080 18px,
+            #6B6B6B 18px, #6B6B6B 20px,
+            #808080 20px, #808080 22px,
+            #8A8A8A 22px, #8A8A8A 24px
+        ),
+        repeating-linear-gradient(90deg, 
+            #808080 0px, #808080 2px,
+            #696969 2px, #696969 4px,
+            #808080 4px, #808080 6px,
+            #5A5A5A 6px, #5A5A5A 8px,
+            #808080 8px, #808080 10px,
+            #909090 10px, #909090 12px,
+            #808080 12px, #808080 14px,
+            #707070 14px, #707070 16px,
+            #808080 16px, #808080 18px,
+            #6B6B6B 18px, #6B6B6B 20px,
+            #808080 20px, #808080 22px,
+            #8A8A8A 22px, #8A8A8A 24px
+        );
+    background-size: 24px 24px, 24px 24px;
+    box-shadow: none;
+}
+
+.mineboom-block-wood {
+    background: #DEB887;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #DEB887 0px, #DEB887 2px,
+            #CD853F 2px, #CD853F 4px,
+            #DEB887 4px, #DEB887 6px,
+            #D2B48C 6px, #D2B48C 8px,
+            #DEB887 8px, #DEB887 10px,
+            #C8A882 10px, #C8A882 12px,
+            #DEB887 12px, #DEB887 14px,
+            #E5C9A0 14px, #E5C9A0 16px,
+            #DEB887 16px, #DEB887 18px,
+            #D4A574 18px, #D4A574 20px
+        );
+    background-size: 20px 20px;
+    box-shadow: none;
+}
+
+.mineboom-block-log {
+    background: #8B4513;
+    background-image: 
+        /* Кольца на бревне */
+        repeating-linear-gradient(0deg, 
+            #8B4513 0px, #8B4513 2px,
+            #654321 2px, #654321 4px,
+            #8B4513 4px, #8B4513 6px,
+            #6B4423 6px, #6B4423 8px,
+            #8B4513 8px, #8B4513 10px,
+            #7B5433 10px, #7B5433 12px
+        );
+    background-size: 12px 12px;
+    box-shadow: 
+        inset 0 2px 4px rgba(0,0,0,0.4),
+        inset 0 -2px 4px rgba(255,255,255,0.1);
+}
+
+.mineboom-block-coal_ore {
+    background: #2F2F2F;
+    background-image: 
+        /* Угольные вкрапления */
+        radial-gradient(circle at 20% 30%, #1A1A1A 2px, transparent 2px),
+        radial-gradient(circle at 80% 70%, #1A1A1A 2px, transparent 2px),
+        radial-gradient(circle at 50% 50%, #1A1A1A 1.5px, transparent 1.5px),
+        /* Текстура камня */
+        repeating-linear-gradient(0deg, 
+            #2F2F2F 0px, #2F2F2F 2px,
+            #1A1A1A 2px, #1A1A1A 4px,
+            #2F2F2F 4px, #2F2F2F 6px,
+            #3F3F3F 6px, #3F3F3F 8px
+        ),
+        repeating-linear-gradient(90deg, 
+            #2F2F2F 0px, #2F2F2F 2px,
+            #1A1A1A 2px, #1A1A1A 4px,
+            #2F2F2F 4px, #2F2F2F 6px,
+            #3F3F3F 6px, #3F3F3F 8px
+        );
+    background-size: 100% 100%, 100% 100%, 100% 100%, 8px 8px, 8px 8px;
+    box-shadow: none;
+}
+
+.mineboom-block-iron_ore {
+    background: #D4A574;
+    background-image: 
+        /* Железные вкрапления */
+        radial-gradient(circle at 25% 25%, #A0A0A0 3px, transparent 3px),
+        radial-gradient(circle at 75% 75%, #A0A0A0 3px, transparent 3px),
+        radial-gradient(circle at 50% 50%, #B0B0B0 2px, transparent 2px),
+        /* Текстура камня */
+        repeating-linear-gradient(0deg, 
+            #D4A574 0px, #D4A574 2px,
+            #C19A6B 2px, #C19A6B 4px,
+            #D4A574 4px, #D4A574 6px,
+            #E0B080 6px, #E0B080 8px
+        ),
+        repeating-linear-gradient(90deg, 
+            #D4A574 0px, #D4A574 2px,
+            #C19A6B 2px, #C19A6B 4px,
+            #D4A574 4px, #D4A574 6px,
+            #E0B080 6px, #E0B080 8px
+        );
+    background-size: 100% 100%, 100% 100%, 100% 100%, 8px 8px, 8px 8px;
+    box-shadow: none;
+}
+
+.mineboom-block-glowstone {
+    background: #FFD700;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #FFD700 0px, #FFD700 3px,
+            #FFA500 3px, #FFA500 6px,
+            #FFD700 6px, #FFD700 9px,
+            #FFFF00 9px, #FFFF00 12px,
+            #FFD700 12px, #FFD700 15px,
+            #FFE55C 15px, #FFE55C 18px
+        ),
+        repeating-linear-gradient(90deg, 
+            #FFD700 0px, #FFD700 3px,
+            #FFA500 3px, #FFA500 6px,
+            #FFD700 6px, #FFD700 9px,
+            #FFFF00 9px, #FFFF00 12px,
+            #FFD700 12px, #FFD700 15px,
+            #FFE55C 15px, #FFE55C 18px
+        );
+    background-size: 18px 18px, 18px 18px;
+    box-shadow: none;
+}
+
+.mineboom-block-diamond_ore {
+    background: #4A9EC4;
+    background-image: 
+        /* Алмазные вкрапления */
+        radial-gradient(circle at 20% 30%, #00FFFF 4px, transparent 4px),
+        radial-gradient(circle at 80% 70%, #00FFFF 4px, transparent 4px),
+        radial-gradient(circle at 50% 50%, #40E0D0 3px, transparent 3px),
+        /* Текстура камня */
+        repeating-linear-gradient(0deg, 
+            #4A9EC4 0px, #4A9EC4 2px,
+            #3A8EB4 2px, #3A8EB4 4px,
+            #4A9EC4 4px, #4A9EC4 6px,
+            #5AAED4 6px, #5AAED4 8px
+        ),
+        repeating-linear-gradient(90deg, 
+            #4A9EC4 0px, #4A9EC4 2px,
+            #3A8EB4 2px, #3A8EB4 4px,
+            #4A9EC4 4px, #4A9EC4 6px,
+            #5AAED4 6px, #5AAED4 8px
+        );
+    background-size: 100% 100%, 100% 100%, 100% 100%, 8px 8px, 8px 8px;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    /* Убираем голубую обводку */
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    /* Убираем все возможные обводки от изображения */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Дополнительные стили для убирания обводки у алмазной руды */
+.mineboom-block-base.mineboom-block-diamond_ore,
+.mineboom-block-base.mineboom-block-diamond_ore *,
+.mineboom-block-base.mineboom-block-diamond_ore::before,
+.mineboom-block-base.mineboom-block-diamond_ore::after {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+}
+
+/* Убираем обводку от изображения алмазной руды */
+.mineboom-block-diamond_ore[style*="background-image"] {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Если обводка от самого изображения - обрезаем её */
+.mineboom-block-base.mineboom-block-diamond_ore {
+    clip-path: inset(0);
+    -webkit-clip-path: inset(0);
+}
+
+.mineboom-block-diamond_block {
+    background: #4ECDC4;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #4ECDC4 0px, #4ECDC4 2px,
+            #3EBDB4 2px, #3EBDB4 4px,
+            #4ECDC4 4px, #4ECDC4 6px,
+            #5EDDD4 6px, #5EDDD4 8px,
+            #4ECDC4 8px, #4ECDC4 10px,
+            #2EADB4 10px, #2EADB4 12px
+        ),
+        repeating-linear-gradient(90deg, 
+            #4ECDC4 0px, #4ECDC4 2px,
+            #3EBDB4 2px, #3EBDB4 4px,
+            #4ECDC4 4px, #4ECDC4 6px,
+            #5EDDD4 6px, #5EDDD4 8px,
+            #4ECDC4 8px, #4ECDC4 10px,
+            #2EADB4 10px, #2EADB4 12px
+        );
+    background-size: 12px 12px, 12px 12px;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+.mineboom-block-endstone {
+    background: #F5F5DC;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #F5F5DC 0px, #F5F5DC 2px,
+            #E5E5CC 2px, #E5E5CC 4px,
+            #F5F5DC 4px, #F5F5DC 6px,
+            #FFFFEC 6px, #FFFFEC 8px,
+            #F5F5DC 8px, #F5F5DC 10px,
+            #DDDDCC 10px, #DDDDCC 12px
+        ),
+        repeating-linear-gradient(90deg, 
+            #F5F5DC 0px, #F5F5DC 2px,
+            #E5E5CC 2px, #E5E5CC 4px,
+            #F5F5DC 4px, #F5F5DC 6px,
+            #FFFFEC 6px, #FFFFEC 8px,
+            #F5F5DC 8px, #F5F5DC 10px,
+            #DDDDCC 10px, #DDDDCC 12px
+        );
+    background-size: 12px 12px, 12px 12px;
+    box-shadow: none;
+}
+
+.mineboom-block-lava {
+    background: #FF4500;
+    background-image: 
+        /* Пузыри лавы */
+        radial-gradient(circle at 30% 40%, #FF8C00 3px, transparent 3px),
+        radial-gradient(circle at 70% 60%, #FF8C00 3px, transparent 3px),
+        /* Текстура лавы */
+        repeating-linear-gradient(0deg, 
+            #FF4500 0px, #FF4500 3px,
+            #FF6347 3px, #FF6347 6px,
+            #FF4500 6px, #FF4500 9px,
+            #FF8C00 9px, #FF8C00 12px,
+            #FF4500 12px, #FF4500 15px,
+            #FF6B35 15px, #FF6B35 18px
+        ),
+        repeating-linear-gradient(90deg, 
+            #FF4500 0px, #FF4500 3px,
+            #FF6347 3px, #FF6347 6px,
+            #FF4500 6px, #FF4500 9px,
+            #FF8C00 9px, #FF8C00 12px,
+            #FF4500 12px, #FF4500 15px,
+            #FF6B35 15px, #FF6B35 18px
+        );
+    background-size: 100% 100%, 100% 100%, 18px 18px, 18px 18px;
+    box-shadow: none;
+    animation: none;
+}
+
+.mineboom-block-bedrock {
+    background: #1C1C1C;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #1C1C1C 0px, #1C1C1C 1px,
+            #0A0A0A 1px, #0A0A0A 2px,
+            #1C1C1C 2px, #1C1C1C 3px,
+            #2E2E2E 3px, #2E2E2E 4px,
+            #1C1C1C 4px, #1C1C1C 5px,
+            #0F0F0F 5px, #0F0F0F 6px,
+            #1C1C1C 6px, #1C1C1C 7px,
+            #2A2A2A 7px, #2A2A2A 8px
+        ),
+        repeating-linear-gradient(90deg, 
+            #1C1C1C 0px, #1C1C1C 1px,
+            #0A0A0A 1px, #0A0A0A 2px,
+            #1C1C1C 2px, #1C1C1C 3px,
+            #2E2E2E 3px, #2E2E2E 4px,
+            #1C1C1C 4px, #1C1C1C 5px,
+            #0F0F0F 5px, #0F0F0F 6px,
+            #1C1C1C 6px, #1C1C1C 7px,
+            #2A2A2A 7px, #2A2A2A 8px
+        );
+    background-size: 8px 8px, 8px 8px;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    /* Убираем черную обводку */
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+}
+
+.mineboom-block-tnt {
+    background: #8B0000;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #8B0000 0px, #8B0000 2px,
+            #FF0000 2px, #FF0000 4px,
+            #8B0000 4px, #8B0000 6px,
+            #A00000 6px, #A00000 8px
+        ),
+        repeating-linear-gradient(90deg, 
+            #8B0000 0px, #8B0000 2px,
+            #FF0000 2px, #FF0000 4px,
+            #8B0000 4px, #8B0000 6px,
+            #A00000 6px, #A00000 8px
+        );
+    background-size: 8px 8px, 8px 8px;
+    box-shadow: 
+        inset 0 2px 4px rgba(0,0,0,0.4),
+        inset 0 -2px 4px rgba(255,255,255,0.1);
+}
+
+/* Динамит */
+.mineboom-dynamite {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.dynamite-body {
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    text-align: center;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+}
+
+/* Результат */
+.mineboom-result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    border: 3px solid #FFD700;
+    text-align: center;
+}
+
+.mineboom-result-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.mineboom-result-icon {
+    font-size: 60px;
+}
+
+.mineboom-result-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.mineboom-tnt-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+}
+
+.mineboom-tnt-block:hover {
+    transform: translateY(-5px);
+}
+
+.mineboom-tnt-block.selected {
+    transform: translateY(-10px) scale(1.05);
+}
+
+.mineboom-tnt-block.selected .mineboom-tnt {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    animation: mineboom-pulse 1s infinite;
+}
+
+.mineboom-tnt-block.exploded {
+    animation: mineboom-explode 0.5s ease-out;
+}
+
+@keyframes mineboom-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes mineboom-explode {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.8; }
+    100% { transform: scale(2); opacity: 0; }
+}
+
+.mineboom-base {
+    width: 80px;
+    height: 80px;
+    border: 3px solid #2a2a2a;
+    border-radius: 0;
+    position: relative;
+    box-shadow: 
+        inset 0 0 0 2px rgba(0,0,0,0.3),
+        inset 0 0 0 4px rgba(255,255,255,0.1),
+        0 4px 8px rgba(0,0,0,0.5);
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.mineboom-base-dirt {
+    background: #8B4513;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #8B4513 0px, #8B4513 8px,
+            #654321 8px, #654321 16px,
+            #8B4513 16px, #8B4513 24px,
+            #6B4423 24px, #6B4423 32px
+        ),
+        repeating-linear-gradient(90deg, 
+            #8B4513 0px, #8B4513 8px,
+            #654321 8px, #654321 16px,
+            #8B4513 16px, #8B4513 24px,
+            #6B4423 24px, #6B4423 32px
+        );
+    background-size: 32px 32px;
+}
+
+.mineboom-base-stone {
+    background: #808080;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #808080 0px, #808080 10px,
+            #696969 10px, #696969 20px,
+            #808080 20px, #808080 30px,
+            #5A5A5A 30px, #5A5A5A 40px
+        ),
+        repeating-linear-gradient(90deg, 
+            #808080 0px, #808080 10px,
+            #696969 10px, #696969 20px,
+            #808080 20px, #808080 30px,
+            #5A5A5A 30px, #5A5A5A 40px
+        );
+    background-size: 40px 40px;
+}
+
+.mineboom-base-wood {
+    background: #DEB887;
+    background-image: 
+        repeating-linear-gradient(0deg, 
+            #DEB887 0px, #DEB887 12px,
+            #CD853F 12px, #CD853F 24px,
+            #DEB887 24px, #DEB887 36px,
+            #D2B48C 36px, #D2B48C 48px
+        );
+    background-size: 48px 48px;
+}
+
+.mineboom-tnt {
+    width: 70px;
+    height: 70px;
+    background: #FF0000;
+    border: 4px solid #000;
+    border-radius: 0;
+    position: relative;
+    margin-top: -8px;
+    box-shadow: 
+        inset 0 0 0 2px #8B0000,
+        inset 0 0 0 4px #FF0000,
+        0 6px 12px rgba(0,0,0,0.7),
+        inset -2px -2px 0 rgba(0,0,0,0.5),
+        inset 2px 2px 0 rgba(255,255,255,0.2);
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.mineboom-tnt::before {
+    content: 'TNT';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 16px;
+    text-shadow: 
+        2px 0 0 #000,
+        -2px 0 0 #000,
+        0 2px 0 #000,
+        0 -2px 0 #000,
+        2px 2px 0 #000,
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000;
+    letter-spacing: 3px;
+    font-family: 'Courier New', monospace;
+    font-style: normal;
+}
+
+.mineboom-base {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.mineboom-star-card {
+    width: 60px;
+    height: 90px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 30%, #FFD700 60%, #FFA500 100%);
+    border: 3px solid #FF8C00;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    box-shadow: 
+        0 6px 16px rgba(255, 215, 0, 0.8), 
+        0 0 25px rgba(255, 215, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: mineboom-float 2.5s ease-in-out infinite;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+@keyframes mineboom-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.mineboom-star-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+}
+
+.mineboom-star-value {
+    font-size: 24px;
+    font-weight: 900;
+    color: #8B4513;
+    text-shadow: 
+        2px 0 0 #000,
+        -2px 0 0 #000,
+        0 2px 0 #000,
+        0 -2px 0 #000,
+        1px 1px 0 #000;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+.mineboom-countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 1), 2px 2px 4px rgba(0,0,0,0.8);
+    z-index: 10;
+    background: rgba(0,0,0,0.7);
+    padding: 15px 30px;
+    border-radius: 15px;
+    border: 3px solid #FFD700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), inset 0 0 20px rgba(255, 215, 0, 0.2);
+    animation: mineboom-countdown-pulse 1s ease-in-out infinite;
+}
+
+@keyframes mineboom-countdown-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+.mineboom-info {
+    text-align: center;
+    color: #FFD700;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 12px;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.mineboom-bet-controls {
+    display: none !important;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.mineboom-add-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.mineboom-participants {
+    display: none !important;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.dice-participants-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Новогодние декоративные элементы для MineBoom */
+/* Убрано - дублирующийся стиль, используется для кирпичной стены выше */
+
+/* Убрано - снежинка удалена, используется для золотой платформы выше */
+
+@keyframes mineboom-snow {
+    0% { background-position: 0 0, 60px 60px, 30px 30px; }
+    100% { background-position: 0 100vh, 60px calc(100vh + 60px), 30px calc(100vh + 30px); }
+}
+
+@keyframes mineboom-snowfall {
+    0% { transform: translateY(-50px); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(100px); opacity: 0; }
+}
+
+@keyframes mineboom-snowflake {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(20px) rotate(180deg); }
+}
+
+/* Дополнительные снежинки */
+.mineboom-tnt-container::before {
+    display: none !important;
+}
+
+.mineboom-tnt-container::after {
+    display: none !important;
+}
+
+.battle-card-mineboom {
+    background: linear-gradient(90deg, #8B4513, #CD853F);
+}
+
+/* ========== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ========== */
+.inventory-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; cursor: pointer; transition: transform 0.2s; }
+.inventory-item:active { transform: scale(0.95); }
+.inventory-item-image { width: 100%; aspect-ratio: 1; background: rgba(255,255,255,0.1); border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: 48px; background-size: cover; background-position: center; }
+.inventory-item-name { font-size: 12px; font-weight: 600; color: #ffffff; text-align: center; margin-bottom: 4px; }
+.inventory-item-rarity { font-size: 10px; color: rgba(255,255,255,0.6); text-align: center; }
+.inventory-item-actions { margin-top: 8px; display: flex; gap: 4px; flex-wrap: wrap; }
+.action-btn { flex: 1; min-width: 60px; padding: 6px 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #ffffff; font-size: 10px; cursor: pointer; text-align: center; white-space: nowrap; }
+.inventory-item-btn { flex: 1; padding: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #ffffff; font-size: 10px; cursor: pointer; text-align: center; }
+.case-page-content { 
+    width: 100%; 
+    max-width: 100%; 
+    margin: 0 auto; 
+    background: url('images/newyear_background.jpg.jpg') center center / cover no-repeat fixed;
+    background-color: #1a1a2e;
+    min-height: 100vh;
+}
+.case-page-header { text-align: center; margin-bottom: 24px; }
+.case-page-icon { font-size: 64px; margin-bottom: 12px; }
+.case-page-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.case-page-price { font-size: 18px; color: rgba(255,255,255,0.7); }
+.case-spinner-line { position: relative; width: 100%; height: 200px; margin: 30px 0; overflow: hidden; background: rgba(0,0,0,0.3); border-radius: 12px; }
+.spinner-center-line-vertical { position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, transparent 0%, #FFD700 20%, #FFD700 80%, transparent 100%); transform: translateX(-50%); z-index: 10; box-shadow: 0 0 10px rgba(255,215,0,0.8); }
+.case-spinner-items { display: flex; gap: 16px; padding: 20px; height: 100%; align-items: center; transition: transform 0.1s linear; }
+.case-spinner-item { flex-shrink: 0; width: 120px; height: 160px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.2); transition: transform 0.2s, border-color 0.2s; }
+.case-spinner-item.selected { border-color: #FFD700; transform: scale(1.1); box-shadow: 0 0 20px rgba(255,215,0,0.6); }
+.case-spinner-item-image { width: 80px; height: 80px; background-size: cover; background-position: center; border-radius: 8px; margin-bottom: 8px; }
+.case-spinner-item-name { font-size: 12px; text-align: center; color: #ffffff; font-weight: 600; }
+.spin-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 18px; font-weight: 700; cursor: pointer; margin: 20px 0; transition: transform 0.2s; }
+.spin-btn:active { transform: scale(0.95); }
+.spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.case-rewards { margin-top: 24px; }
+.rewards-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: rgba(255,255,255,0.8); }
+.rewards-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
+.reward-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px; text-align: center; }
+.reward-item-image { width: 60px; height: 60px; margin: 0 auto 8px; background-size: cover; background-position: center; border-radius: 6px; }
+.reward-item-name { font-size: 10px; color: rgba(255,255,255,0.8); }
+.ladder-patterns { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
+.ladder-star { position: absolute; color: rgba(255,255,255,0.3); font-size: 20px; animation: twinkle 2s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+.ladder-rocket { 
+    position: absolute; 
+    width: 120px; 
+    height: 120px; 
+    z-index: 3; 
+    transition: transform 0.1s linear;
+    animation: rocketFastFly 0.8s linear infinite, rocketShake 0.05s linear infinite;
+    transform-origin: center center;
+}
+
+.ladder-rocket::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 100px;
+    background: radial-gradient(ellipse at center, 
+        rgba(255, 100, 0, 0.8) 0%,
+        rgba(255, 150, 0, 0.6) 20%,
+        rgba(255, 200, 0, 0.4) 40%,
+        rgba(200, 100, 0, 0.2) 60%,
+        transparent 100%);
+    animation: rocketSmoke 0.3s ease-out infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.ladder-rocket::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 80px;
+    background: radial-gradient(ellipse at center, 
+        rgba(255, 200, 100, 0.9) 0%,
+        rgba(255, 150, 50, 0.7) 30%,
+        rgba(200, 100, 0, 0.5) 50%,
+        transparent 80%);
+    animation: rocketSmoke2 0.4s ease-out infinite;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.ladder-rocket img,
+.ladder-rocket video,
+.ladder-rocket .rocket-video { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+    display: block;
+}
+
+.rocket-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* Быстрый полет на месте с тряской */
+@keyframes rocketFastFly {
+    0% { 
+        transform: translate(-50%, -50%) translateY(0px) translateX(0px) rotate(0deg) scale(1);
+    }
+    10% { 
+        transform: translate(-50%, -50%) translateY(-25px) translateX(8px) rotate(3deg) scale(1.05);
+    }
+    20% { 
+        transform: translate(-50%, -50%) translateY(-35px) translateX(12px) rotate(4deg) scale(1.08);
+    }
+    30% { 
+        transform: translate(-50%, -50%) translateY(-40px) translateX(15px) rotate(5deg) scale(1.1);
+    }
+    40% { 
+        transform: translate(-50%, -50%) translateY(-45px) translateX(18px) rotate(6deg) scale(1.12);
+    }
+    50% { 
+        transform: translate(-50%, -50%) translateY(-50px) translateX(20px) rotate(7deg) scale(1.15);
+    }
+    60% { 
+        transform: translate(-50%, -50%) translateY(-55px) translateX(22px) rotate(8deg) scale(1.18);
+    }
+    70% { 
+        transform: translate(-50%, -50%) translateY(-60px) translateX(25px) rotate(9deg) scale(1.2);
+    }
+    80% { 
+        transform: translate(-50%, -50%) translateY(-65px) translateX(28px) rotate(10deg) scale(1.22);
+    }
+    90% { 
+        transform: translate(-50%, -50%) translateY(-70px) translateX(30px) rotate(11deg) scale(1.25);
+    }
+    100% { 
+        transform: translate(-50%, -50%) translateY(-75px) translateX(32px) rotate(12deg) scale(1.3);
+    }
+}
+
+/* Тряска для эффекта скорости */
+@keyframes rocketShake {
+    0%, 100% { 
+        transform: translate(-50%, -50%) translateX(0px) translateY(0px) rotate(0deg);
+    }
+    25% { 
+        transform: translate(-50%, -50%) translateX(2px) translateY(-1px) rotate(0.5deg);
+    }
+    50% { 
+        transform: translate(-50%, -50%) translateX(-2px) translateY(1px) rotate(-0.5deg);
+    }
+    75% { 
+        transform: translate(-50%, -50%) translateX(1px) translateY(-1px) rotate(0.3deg);
+    }
+}
+
+/* Дым от ракеты */
+@keyframes rocketSmoke {
+    0% {
+        opacity: 0.9;
+        transform: translateX(-50%) translateY(0px) scale(0.8);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateX(-50%) translateY(-10px) scale(1);
+    }
+    100% {
+        opacity: 0.3;
+        transform: translateX(-50%) translateY(-20px) scale(1.2);
+    }
+}
+
+@keyframes rocketSmoke2 {
+    0% {
+        opacity: 0.8;
+        transform: translateX(-50%) translateY(0px) scale(0.6);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateX(-50%) translateY(-15px) scale(0.9);
+    }
+    100% {
+        opacity: 0.2;
+        transform: translateX(-50%) translateY(-30px) scale(1.1);
+    }
+}
+
+/* Взрыв ракеты */
+.rocket-fall {
+    animation: rocketExplode 0.8s ease-out forwards !important;
+}
+
+@keyframes rocketExplode {
+    0% {
+        transform: translate(-50%, -50%) translateY(-75px) translateX(32px) rotate(12deg) scale(1.3);
+        opacity: 1;
+        filter: brightness(1.5);
+    }
+    20% {
+        transform: translate(-50%, -50%) translateY(-100px) translateX(40px) rotate(15deg) scale(1.5);
+        opacity: 0.9;
+        filter: brightness(2) drop-shadow(0 0 20px rgba(255, 100, 0, 1));
+    }
+    40% {
+        transform: translate(-50%, -50%) translateY(-120px) translateX(50px) rotate(20deg) scale(1.8);
+        opacity: 0.7;
+        filter: brightness(2.5) drop-shadow(0 0 30px rgba(255, 50, 0, 1));
+    }
+    60% {
+        transform: translate(-50%, -50%) translateY(-150px) translateX(60px) rotate(25deg) scale(2.2);
+        opacity: 0.4;
+        filter: brightness(3) drop-shadow(0 0 40px rgba(255, 0, 0, 1));
+    }
+    80% {
+        transform: translate(-50%, -50%) translateY(-180px) translateX(70px) rotate(30deg) scale(2.5);
+        opacity: 0.2;
+        filter: brightness(4) drop-shadow(0 0 50px rgba(255, 0, 0, 1));
+    }
+    100% {
+        transform: translate(-50%, -50%) translateY(-200px) translateX(80px) rotate(35deg) scale(3);
+        opacity: 0;
+        filter: brightness(5) drop-shadow(0 0 60px rgba(255, 0, 0, 1));
+    }
+}
+.bird-animation-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.ladder-line-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.ladder-explosion { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20; text-align: center; }
+.explosion-text { font-size: 48px; font-weight: 700; color: #ff0000; text-shadow: 0 0 20px rgba(255,0,0,1); margin-bottom: 12px; }
+.explosion-multiplier { font-size: 32px; font-weight: 700; color: #ffffff; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
+.ladder-result { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 15; text-align: center; background: rgba(0,0,0,0.8); padding: 24px; border-radius: 16px; border: 2px solid rgba(255,255,255,0.3); }
+.result-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #ffffff; }
+.result-multiplier { font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 12px; }
+.result-win { font-size: 20px; font-weight: 600; color: #22c55e; }
+.ladder-bet-selection-bottom { margin-top: 20px; }
+.ladder-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: rgba(255,255,255,0.9); }
+.ladder-bet-submit-btn { padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+.ladder-bet-submit-btn:active { transform: scale(0.95); }
+.ladder-stop-btn { width: 100%; padding: 20px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 24px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: transform 0.2s; text-transform: uppercase; letter-spacing: 2px; }
+.ladder-stop-btn:active { transform: scale(0.95); }
+.ladder-players-list { margin-top: 20px; }
+.players-list-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: rgba(255,255,255,0.8); }
+.players-list-content { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; min-height: 100px; }
+.ladder-multiplier-history { margin-bottom: 20px; }
+.history-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: rgba(255,255,255,0.8); }
+.history-content { display: flex; gap: 8px; flex-wrap: wrap; }
+.history-item { padding: 8px 12px; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 14px; font-weight: 600; }
+.history-item.win { background: rgba(34,197,94,0.3); color: #22c55e; }
+.history-item.lose { background: rgba(239,68,68,0.3); color: #ef4444; }
+.history-empty { text-align: center; color: rgba(255,255,255,0.4); padding: 20px; font-size: 14px; }
+.ladder-exit-btn { padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #ffffff; font-size: 14px; cursor: pointer; margin-bottom: 16px; transition: background 0.2s; }
+.battles-menu { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.battles-dice-main { margin-bottom: 24px; }
+.dice-rules { margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 12px; font-size: 14px; color: rgba(255,255,255,0.8); }
+.dice-rules > div { margin-bottom: 8px; }
+.dice-rules-note { margin-top: 12px; font-size: 12px; color: rgba(255,255,255,0.6); font-style: italic; }
+.battles-dice-bottom { margin-top: 24px; }
+.dice-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.dice-input-wrapper { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 16px; }
+.dice-input-icon { font-size: 20px; }
+.battles-action-btn { padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.2s; }
+.battles-action-btn:active { transform: scale(0.95); }
+.dice-btn-icon { font-size: 18px; }
+.wheel-bet-input { flex: 1; background: transparent; border: none; color: #ffffff; font-size: 16px; outline: none; }
+.wheel-bet-input::placeholder { color: rgba(255,255,255,0.4); }
+.wheel-bet-icon { font-size: 20px; }
+.wheel-bet-submit-btn { padding: 6px 12px; background: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%); border: none; border-radius: 8px; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+.wheel-bet-submit-btn:active { transform: scale(0.95); }
+.wheel-action-btn { flex: 1; padding: 6px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 8px; color: #ffffff; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: transform 0.2s; }
+.wheel-btn-icon { font-size: 18px; }
+.wheel-btn-text { font-size: 14px; }
+.wheel-players-empty { 
+    text-align: center; 
+    color: rgba(255,255,255,0.6); 
+    padding: 30px 20px; 
+    font-size: 16px; 
+    border-top: 2px solid rgba(255,255,255,0.2);
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    margin: 10px 0;
+}
+
+.wheel-player-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.wheel-player-item:last-child {
+    margin-bottom: 0;
+}
+
+.wheel-player-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
+}
+
+.wheel-player-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.wheel-player-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.wheel-player-bet {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.wheel-player-percent {
+    font-size: 12px;
+    color: #FFD700;
+    font-weight: 600;
+}
+
+.wheel-percent-bars {
+    display: flex;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.wheel-percent-bar {
+    height: 4px;
+    flex: 1;
+    border-radius: 2px;
+    min-width: 3px;
+}
+.wheel-center-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30%; height: 30%; background: #8B0000; border: 3px solid #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5; }
+.wheel-center-text { font-size: 16px; font-weight: 700; color: #FFD700; }
+.bird-game-container { 
+    width: 100%; 
+    max-width: 100%; 
+    margin: 0 auto; 
+    background: url('images/newyear_background.jpg.jpg') center center / cover no-repeat fixed;
+    background-color: #1a1a2e;
+    min-height: 100vh;
+}
+.bird-game-header { display: flex; justify-content: space-between; margin-bottom: 20px; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; }
+.bird-score, .bird-best { display: flex; flex-direction: column; gap: 4px; }
+.score-label, .best-label { font-size: 12px; color: rgba(255,255,255,0.6); }
+.score-value, .best-value { font-size: 20px; font-weight: 700; color: #ffffff; }
+.bird-difficulty { margin-bottom: 20px; }
+.difficulty-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; text-align: center; }
+.difficulty-buttons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.difficulty-btn { padding: 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; cursor: pointer; transition: transform 0.2s; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.difficulty-btn:active { transform: scale(0.95); }
+.difficulty-price { font-size: 18px; font-weight: 700; color: #FFD700; }
+.difficulty-name { font-size: 14px; color: rgba(255,255,255,0.8); }
+.bird-game-canvas { position: relative; width: 100%; aspect-ratio: 1; background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 100%); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+.bird-countdown { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; }
+.bird-start-screen { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 5; }
+.start-title { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+.start-instruction { font-size: 18px; margin-bottom: 8px; color: rgba(255,255,255,0.9); }
+.start-hint { font-size: 14px; color: rgba(255,255,255,0.6); }
+.bird-game-over { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10; background: rgba(0,0,0,0.8); padding: 24px; border-radius: 16px; }
+.game-over-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.game-over-score { font-size: 18px; margin-bottom: 16px; color: rgba(255,255,255,0.8); }
+.restart-btn { padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 16px; font-weight: 600; cursor: pointer; }
+.ground { position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: #8B4513; border-top: 2px solid #654321; }
+.dino { position: absolute; bottom: 40px; left: 50px; font-size: 48px; z-index: 3; transition: transform 0.1s; }
+.obstacles-container { position: absolute; top: 0; left: 0; right: 0; bottom: 40px; pointer-events: none; }
+.obstacle { position: absolute; bottom: 40px; width: 30px; height: 40px; background: #8B4513; border: 2px solid #654321; border-radius: 4px; }
+.bird-controls { text-align: center; }
+.bird-jump-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 18px; font-weight: 700; cursor: pointer; }
+.upgrade-container { 
+    width: 100%; 
+    max-width: 100%; 
+    margin: 0 auto; 
+    background: url('images/newyear_background.jpg.jpg') center center / cover no-repeat fixed;
+    background-color: #1a1a2e;
+    min-height: 100vh;
+}
+.upgrade-slots { margin-bottom: 24px; }
+.upgrade-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: rgba(255,255,255,0.9); }
+.upgrade-slots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.upgrade-slot { aspect-ratio: 1; background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.3); border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+.upgrade-slot:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1); }
+.slot-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 8px; }
+.slot-placeholder { font-size: 32px; color: rgba(255,255,255,0.3); }
+.upgrade-target { margin-bottom: 24px; }
+.upgrade-target-slot { aspect-ratio: 1; max-width: 200px; margin: 0 auto; background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.3); border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+.upgrade-target-slot:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1); }
+.upgrade-wheel-container { margin-bottom: 24px; text-align: center; }
+.upgrade-wheel { position: relative; width: 300px; height: 300px; margin: 0 auto; }
+.wheel-content { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; position: relative; }
+/* Стрелочка колеса включена */
+.wheel-pointer { display: block !important; visibility: visible !important; opacity: 1 !important; }
+.pointer-circle { display: block !important; visibility: visible !important; opacity: 1 !important; }
+.wheel-pointer-arrow { display: block !important; visibility: visible !important; opacity: 1 !important; }
+.wheel-pointer-top { display: block !important; visibility: visible !important; opacity: 1 !important; }
+.wheel-pointer-arrow::after { display: block !important; }
+.wheel-chance { margin-top: 12px; font-size: 24px; font-weight: 700; color: #FFD700; }
+.upgrade-spin-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 18px; font-weight: 700; cursor: pointer; transition: transform 0.2s; }
+.upgrade-spin-btn:active { transform: scale(0.95); }
+.upgrade-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 1000; display: none; align-items: center; justify-content: center; }
+.modal.active { display: flex; }
+.modal-content { background: #1a1a2e; border-radius: 20px; padding: 24px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-header h3 { font-size: 24px; font-weight: 700; }
+.modal-close { width: 32px; height: 32px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; color: #ffffff; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.modal-body { width: 100%; }
+.top-up-buttons { display: flex; flex-direction: column; gap: 12px; }
+.top-up-btn { display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+.top-up-btn:active { transform: scale(0.98); background: rgba(255,255,255,0.1); }
+.top-up-icon { font-size: 32px; }
+.top-up-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.top-up-text { font-size: 16px; font-weight: 600; color: #ffffff; }
+.top-up-desc { font-size: 12px; color: rgba(255,255,255,0.6); }
+.case-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; align-items: center; justify-content: center; }
+.case-modal.active { display: flex; }
+.case-modal-content { width: 90%; max-width: 500px; position: relative; }
+.case-spinner-container { position: relative; width: 100%; height: 300px; overflow: hidden; background: rgba(0,0,0,0.5); border-radius: 12px; }
+.case-spinner { display: flex; gap: 16px; padding: 20px; height: 100%; align-items: center; transition: transform 5s cubic-bezier(0.1, 0.1, 0.1, 1); will-change: transform; }
+.case-result { text-align: center; padding: 40px 20px; }
+.result-icon { font-size: 64px; margin-bottom: 16px; }
+.result-name { font-size: 24px; font-weight: 700; margin-bottom: 24px; color: #ffffff; }
+.result-btn { padding: 16px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 18px; font-weight: 700; cursor: pointer; }
+.item-select-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; max-height: 400px; overflow-y: auto; }
+.item-select-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; cursor: pointer; transition: transform 0.2s; text-align: center; }
+.item-select-item:active { transform: scale(0.95); }
+.upgrade-result-content { text-align: center; padding: 20px; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.9); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px; background: transparent; border: none; cursor: pointer; transition: all 0.2s; }
+.nav-item.active { background: rgba(255,255,255,0.1); }
+.nav-icon { font-size: 24px; }
+.nav-label { font-size: 10px; color: rgba(255,255,255,0.7); }
+.nav-label-en { font-size: 8px; color: rgba(255,255,255,0.5); }
+.nav-item.active .nav-label { color: #ffffff; font-weight: 600; }
+.mineboom-bet-input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: #ffffff; font-size: 16px; outline: none; }
+.mineboom-bet-input::placeholder { color: rgba(255,255,255,0.4); }
+.mineboom-add-btn { flex: 1; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.2s; }
+.mineboom-add-btn:active { transform: scale(0.95); }
+
+/* Убираем все обводки у всех типов блоков */
+.mineboom-block-base *,
+.mineboom-block-base::before,
+.mineboom-block-base::after {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Адаптивность для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .wheel-game-field {
+        max-width: 85vw;
+        max-height: 85vw;
+        padding: 5px;
+    }
+    
+    .wheel-svg {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .mineboom-block-base {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .mineboom-block-tnt {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .mineboom-blocks-container {
+        gap: 30px;
+        padding: 0 10px;
+    }
+    
+    .section-content {
+        padding: 10px;
+    }
+    
+    .wheel-section-content {
+        padding: 5px 4px;
+    }
+    
+    .ladder-section-content {
+        padding: 4px;
+    }
+    
+    .battles-section-content {
+        padding: 4px;
+    }
+    
+    .mineboom-section-content {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wheel-game-field {
+        max-width: 80vw;
+        max-height: 80vw;
+        padding: 3px;
+    }
+    
+    .mineboom-block-base {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .mineboom-block-tnt {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .mineboom-blocks-container {
+        gap: 20px;
+    }
+    
+    .mineboom-block-tnt-hanging {
+        top: -200px;
+    }
+}

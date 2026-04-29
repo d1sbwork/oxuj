@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="data:,">
+    <title>App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        // Простая проверка загрузки
+        console.log('HTML загружен, ожидаем app.js...');
+        window.htmlLoaded = true;
+    </script>
+</head>
+<body>
+    <!-- Загрузочный экран -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <img src="images/splash_screen.jpg" alt="Loading" class="splash-image">
+            <!-- Анимированная надпись GIFTS -->
+            <div class="gifts-stripes-container">
+                <div class="gifts-stripe gifts-stripe-1"></div>
+                <div class="gifts-stripe gifts-stripe-2"></div>
+                <div class="gifts-stripe gifts-stripe-3"></div>
+                <div class="gifts-text-wrapper">
+                    <div class="gifts-text">GIFTS</div>
+                    <div class="gifts-text gifts-text-duplicate">GIFTS</div>
+                </div>
+            </div>
+            <div class="splash-loader">
+                <div class="loader-spinner"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="app-container" id="appContainer" style="display: none;">
+        <!-- Полосочка с последними выигрышами -->
+        <div class="wins-bar" id="winsBar">
+            <div class="wins-track" id="winsTrack">
+                <!-- Выигрыши будут добавляться динамически -->
+            </div>
+        </div>
+
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="online-indicator">
+                <span class="online-dot"></span>
+                <span class="online-text" id="appOnlineText">Online: 0</span>
+            </div>
+            <button class="wallet-btn" onclick="showWalletMenu()" id="walletBtn">
+                <span class="wallet-icon">💼</span>
+                <span class="wallet-balance" id="balanceAmount">0 ⭐</span>
+            </button>
+        </div>
+
+        <!-- Контент режимов -->
+        <div class="content-area" id="contentArea">
+            <!-- Инвентарь -->
+            <div class="section" id="inventorySection" style="display: flex;">
+                <div class="section-content">
+                    <h2>📦 Инвентарь</h2>
+                    <p class="section-subtitle">Inventory</p>
+                    
+                    <div class="inventory-container">
+                        <div class="inventory-items" id="inventoryItems">
+                            <div class="empty-inventory">
+                                <div class="empty-icon">📭</div>
+                                <p>Ваш инвентарь пуст</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Кейсы -->
+            <div class="section" id="casesSection">
+                <div class="section-content">
+                    <h2>🎁 Кейсы</h2>
+                    <p class="section-subtitle">Cases</p>
+                    <div class="cases-grid">
+                        <div class="case-card" onclick="openCasePage('free')">
+                            <div class="case-box case-box-image" style="background-image: url('images/everyday_case.png.jpg');">
+                                <div class="case-icon" style="display: none;">📦</div>
+                            </div>
+                            <div class="case-name">Free case</div>
+                            <div class="case-price">Бесплатно</div>
+                        </div>
+                        <div class="case-card" onclick="openCasePage('newyear')">
+                            <div class="case-box case-box-image" style="background-image: url('images/newyear_case.png.jpg');">
+                                <div class="case-icon" style="display: none;">🎄</div>
+                            </div>
+                            <div class="case-name">NewYear case</div>
+                            <div class="case-price">50 ⭐</div>
+                        </div>
+                        <div class="case-card" onclick="openCasePage('crypto')">
+                            <div class="case-box case-box-image" style="background-image: url('images/crypto_case.png.jpg');">
+                                <div class="case-icon" style="display: none;">₿</div>
+                            </div>
+                            <div class="case-name">Crypto case</div>
+                            <div class="case-price">100 ⭐</div>
+                        </div>
+                        <div class="case-card" onclick="openCasePage('onlynft')">
+                            <div class="case-box">
+                                <div class="case-icon">🎨</div>
+                            </div>
+                            <div class="case-name">ONLY NFT case</div>
+                            <div class="case-price">200 ⭐</div>
+                        </div>
+                        <div class="case-card" onclick="openCasePage('genesis')">
+                            <div class="case-box case-box-image" style="background-image: url('images/webappimagesgenesis_case.png.jpg');">
+                                <div class="case-icon" style="display: none;">⭐</div>
+                            </div>
+                            <div class="case-name">Genesis case</div>
+                            <div class="case-price">500 ⭐</div>
+                        </div>
+                        <div class="case-card" onclick="openCasePage('elite')">
+                            <div class="case-box case-box-image" style="background-image: url('images/elite_case.png.jpg');">
+                                <div class="case-icon" style="display: none;">👑</div>
+                            </div>
+                            <div class="case-name">Elite case</div>
+                            <div class="case-price">1000 ⭐</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Страница кейса -->
+            <div class="section" id="casePageSection">
+                <div class="case-page-content">
+                    <button class="back-btn" onclick="backToCases()">← Назад</button>
+                    <div class="case-page-header">
+                        <div class="case-page-icon" id="casePageIcon">📦</div>
+                        <h2 class="case-page-title" id="casePageTitle">Free case</h2>
+                        <div class="case-page-price" id="casePagePrice">Бесплатно</div>
+                    </div>
+                    
+                    <!-- Линия прокрутки подарков -->
+                    <div class="case-spinner-line" id="caseSpinnerLine">
+                        <div class="spinner-center-line-vertical"></div>
+                        <div class="case-spinner-items" id="caseSpinnerItems">
+                            <!-- Подарки будут добавлены динамически -->
+                        </div>
+                    </div>
+                    
+                    <button class="spin-btn" id="spinBtn" onclick="spinCase()">
+                        <span class="spin-btn-text">Прокрутить</span>
+                    </button>
+                    
+                    <div class="case-rewards">
+                        <h3 class="rewards-title">Возможные награды:</h3>
+                        <div class="rewards-list" id="rewardsList">
+                            <!-- Подарки будут добавлены динамически -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Лесенка -->
+            <div class="section" id="ladderSection">
+                <div class="section-content">
+                    <h2>🪜 Лесенка</h2>
+                    <p class="section-subtitle">Ladder</p>
+                    
+                    <!-- Кнопка выхода (внизу) -->
+                    <button class="ladder-exit-btn" onclick="switchSection('inventory')">← Выход</button>
+                    
+                    <div class="ladder-game-container">
+                        <!-- Игровое поле -->
+                        <div class="ladder-game-field" id="ladderGameField">
+                            <!-- Фон со звездами -->
+                            <div class="ladder-patterns" id="ladderPatterns">
+                                <!-- Звезды будут добавлены динамически -->
+                            </div>
+
+                            <!-- Ракета -->
+                            <div class="ladder-rocket" id="ladderRocket" style="display: none;">
+                                <img src="images/rocket.png" alt="Rocket" onerror="this.src='images/rocket_pepe.png.webp'">
+                            </div>
+                            
+                            <!-- Canvas для анимации птички -->
+                            <canvas id="birdAnimationCanvas" class="bird-animation-canvas"></canvas>
+                            
+                            <!-- Белая полоска (временно скрыта - ждем скриншот) -->
+                            <svg id="ladderLineSvg" class="ladder-line-svg" style="display: none;">
+                                <path id="ladderLinePath" stroke="white" stroke-width="4" fill="none" opacity="0.9"/>
+                            </svg>
+                            
+                            <!-- Большой множитель в центре -->
+                            <div class="ladder-multiplier-display" id="ladderMultiplierDisplay">
+                                <div class="multiplier-big" id="ladderMultiplier">x0.01</div>
+                            </div>
+                            
+                            
+                            <!-- Взрыв -->
+                            <div class="ladder-explosion" id="ladderExplosion" style="display: none;">
+                                <div class="explosion-text">💥 ВЗРЫВ!</div>
+                                <div class="explosion-multiplier" id="explosionMultiplier">x0.00</div>
+                            </div>
+                            
+                            <!-- Результат -->
+                            <div class="ladder-result" id="ladderResult" style="display: none;">
+                                <div class="result-title" id="ladderResultTitle">Игра окончена</div>
+                                <div class="result-multiplier">Множитель: <span id="ladderResultMultiplier">x0.00</span></div>
+                                <div class="result-win" id="ladderResultWin" style="display: none;">
+                                    Выигрыш: <span id="ladderResultAmount">0</span> ⭐
+                                </div>
+                            </div>
+                            
+                            <!-- Обратный отсчет -->
+                            <div class="ladder-countdown" id="ladderCountdown" style="display: none;">
+                                <div class="countdown-number" id="ladderCountdownNumber">3</div>
+                            </div>
+                        </div>
+                        
+                        <!-- История множителей за последние 7 раундов (выше блока ставки) -->
+                        <div class="ladder-multiplier-history" id="ladderMultiplierHistory">
+                            <h4 class="history-title">Последние 7 раундов:</h4>
+                            <div class="history-content" id="ladderHistoryContent">
+                                <div class="history-empty">История пуста</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Выбор ставки (снизу) -->
+                        <div class="ladder-bet-selection-bottom" id="ladderBetSelection">
+                            <h3 class="ladder-title">Введите ставку (от 25 ⭐):</h3>
+                            <div class="ladder-bet-input-container">
+                                <input type="number" class="ladder-bet-input" id="ladderBetInput" min="25" step="1" value="25" placeholder="25" onkeypress="if(event.key==='Enter') startLadderGameFromInput()">
+                                <span class="bet-input-icon">⭐</span>
+                                <button class="ladder-bet-submit-btn" onclick="startLadderGameFromInput()">Поставить</button>
+                            </div>
+                            
+                            <!-- Кнопка STOP (внизу, вне экрана) -->
+                            <button class="ladder-stop-btn" id="ladderStopBtn" onclick="stopLadderGame()" style="display: none;">
+                                <span class="stop-btn-text">STOP</span>
+                            </button>
+                            
+                            <!-- Список игроков -->
+                            <div class="ladder-players-list" id="ladderPlayersList">
+                                <h4 class="players-list-title">Игроки:</h4>
+                                <div class="players-list-content" id="ladderPlayersContent">
+                                    <!-- Игроки будут добавляться динамически -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Битвы -->
+            <div class="section" id="battlesSection">
+                <div class="section-content">
+                    <h2>⚔️ Битвы</h2>
+                    <p class="section-subtitle">Battles</p>
+
+                    <!-- Меню выбора режима битв -->
+                    <div class="battles-menu">
+                        <!-- Кубик -->
+                        <div class="battle-card battle-card-dice active" data-mode="dice" onclick="switchBattlesMode('dice')">
+                            <div class="battle-card-icon">🎲</div>
+                            <div class="battle-card-text">
+                                <div class="battle-card-title">Dice</div>
+                                <div class="battle-card-subtitle">Roll the dice & win</div>
+                            </div>
+                        </div>
+
+                        <!-- Арена -->
+                        <div class="battle-card battle-card-mineboom" data-mode="mineboom" onclick="switchBattlesMode('mineboom')">
+                            <div class="battle-card-icon">💣</div>
+                            <div class="battle-card-text">
+                                <div class="battle-card-title">MineBoom</div>
+                                <div class="battle-card-subtitle">Choose your TNT block</div>
+                            </div>
+                        </div>
+
+                        <!-- Колесо -->
+                        <div class="battle-card battle-card-wheel" data-mode="wheel" onclick="switchBattlesMode('wheel')">
+                            <div class="battle-card-icon">🎡</div>
+                            <div class="battle-card-text">
+                                <div class="battle-card-title">Wheel</div>
+                                <div class="battle-card-subtitle">Spin the wheel & win</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battles: Dice game -->
+            <div class="section" id="battlesDiceSection">
+                <div class="section-content">
+                    <button class="back-btn" onclick="switchSection('battles')">← Back</button>
+                    <h2>🎲 Dice</h2>
+                    <p class="section-subtitle">Roll the dice</p>
+                    <div class="battles-game-container">
+                        <div class="battles-dice-main">
+                            <div class="dice-display">
+                                <div class="dice-cube">
+                                    <div class="dice-cube-inner" id="diceCurrentValue">6</div>
+                                </div>
+                            </div>
+                            <div class="dice-info" id="diceInfoText">Auto roll every 15s</div>
+                            <div class="dice-countdown" id="diceCountdown">15</div>
+
+                            <!-- Выбор числа -->
+                            <div class="dice-choose">
+                                <span class="dice-choose-label">Choose number:</span>
+                                <div class="dice-choose-buttons" id="diceChooseButtons">
+                                    <button type="button" data-value="1" class="dice-choose-btn active">1</button>
+                                    <button type="button" data-value="2" class="dice-choose-btn">2</button>
+                                    <button type="button" data-value="3" class="dice-choose-btn">3</button>
+                                    <button type="button" data-value="4" class="dice-choose-btn">4</button>
+                                    <button type="button" data-value="5" class="dice-choose-btn">5</button>
+                                    <button type="button" data-value="6" class="dice-choose-btn">6</button>
+                                </div>
+                            </div>
+
+                            <!-- Описание шансов -->
+                            <div class="dice-rules">
+                                <div>1 → x3 to your bet</div>
+                                <div>2–4 → x1.5 to your bet</div>
+                                <div>5–6 → x2 to your bet</div>
+                                <div class="dice-rules-note">If your number does not drop — you lose the bet.</div>
+                            </div>
+                        </div>
+
+                        <div class="battles-dice-bottom">
+                            <div class="dice-actions">
+                                <div class="dice-input-wrapper">
+                                    <span class="dice-input-icon">⭐</span>
+                                    <input type="number" id="diceBetInput" class="dice-bet-input" min="100" step="1" placeholder="100">
+                                </div>
+                                <button class="battles-action-btn dice-add-btn" onclick="diceAddStars()">
+                                    <span class="dice-btn-icon">⭐</span>
+                                    <span>Add stars</span>
+                                </button>
+                                <button class="battles-action-btn dice-add-btn" onclick="diceAddGift()">
+                                    <span class="dice-btn-icon">🎁</span>
+                                    <span>Add gift</span>
+                                </button>
+                            </div>
+                            <div class="dice-participants">
+                                <div class="dice-participants-title">Participants</div>
+                                <div class="dice-participants-list" id="diceParticipantsList">
+                                    <div class="dice-participants-empty">No bets yet</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battles: MineBoom game -->
+            <div class="section" id="battlesMineBoomSection">
+                <div class="section-content mineboom-section-content">
+                    <button class="back-btn" onclick="switchSection('battles')">← Back</button>
+                    <h2>💣 MineBoom</h2>
+                    <p class="section-subtitle">Choose your TNT block</p>
+                    <div class="battles-game-container">
+                        <!-- Поле MineBoom с блоками -->
+                        <div class="mineboom-field">
+                            <div class="mineboom-blocks-container" id="mineboomBlocksContainer">
+                                <!-- Блоки будут добавлены динамически -->
+                            </div>
+                            
+                            <!-- Динамит (падающий) -->
+                            <div class="mineboom-dynamite" id="mineboomDynamite" style="display: none;">
+                                <div class="dynamite-body">💣</div>
+                            </div>
+                            
+                            <!-- Информация о результате -->
+                            <div class="mineboom-result" id="mineboomResult" style="display: none;">
+                                <div class="mineboom-result-content">
+                                    <div class="mineboom-result-icon" id="mineboomResultIcon">🎁</div>
+                                    <div class="mineboom-result-text" id="mineboomResultText">Вы получили подарок!</div>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Battles: Wheel game -->
+            <div class="section" id="battlesWheelSection">
+                <div class="section-content wheel-section-content">
+                    <button class="back-btn" onclick="switchSection('battles')">← Back</button>
+                    
+                    <!-- Таймер сверху -->
+                    <div class="wheel-timer-box">
+                        <div class="wheel-timer" id="wheelTimer">00:15</div>
+                    </div>
+                    
+                    <!-- Игровое поле с колесом -->
+                    <div class="wheel-game-field" id="wheelGameField">
+                        <!-- Фон с декоративными элементами -->
+                        <div class="wheel-background">
+                            <div class="wheel-decorations">
+                                <!-- Снежинки и звездочки будут добавлены через CSS -->
+                            </div>
+                        </div>
+                        
+                        <!-- Указатель сверху -->
+                        <div class="wheel-pointer-top">
+                            <div class="wheel-pointer-arrow"></div>
+                        </div>
+                        
+                        <!-- Колесо -->
+                        <div class="wheel-container">
+                            <svg class="wheel-svg" id="wheelSvg" viewBox="0 0 400 400">
+                                <!-- Сегменты будут добавлены динамически -->
+                            </svg>
+                            
+                            <!-- Центральный круг -->
+                            <div class="wheel-center-circle">
+                                <div class="wheel-center-text">Wheel</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Поле ввода ставки (показывается сразу) -->
+                    <div class="wheel-bet-input-container" id="wheelBetInputContainer">
+                        <input type="number" class="wheel-bet-input" id="wheelBetInput" min="100" step="1" value="" placeholder="100" onkeypress="if(event.key==='Enter') wheelSubmitBet()">
+                        <span class="wheel-bet-icon">⭐</span>
+                        <button class="wheel-bet-submit-btn" onclick="wheelSubmitBet()">Поставить</button>
+                    </div>
+                    
+                    <!-- Кнопки действий -->
+                    <div class="wheel-action-buttons">
+                        <button class="wheel-action-btn wheel-add-gift-btn" onclick="wheelAddGift()">
+                            <span class="wheel-btn-icon">🎁</span>
+                            <span class="wheel-btn-text">Добавить подарок</span>
+                        </button>
+                        <button class="wheel-action-btn wheel-add-stars-btn" onclick="wheelAddStars()">
+                            <span class="wheel-btn-icon">⭐</span>
+                            <span class="wheel-btn-text">Добавить звезды</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Список игроков -->
+                    <div class="wheel-players-section">
+                        <div class="wheel-players-title">Список игроков</div>
+                        <div class="wheel-players-list" id="wheelPlayersList">
+                            <div class="wheel-players-empty">Нет участников</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Птица -->
+            <div class="section" id="birdSection">
+                <div class="section-content">
+                    <h2>🏆 Конкурсы</h2>
+                    <p class="section-subtitle">Competitions</p>
+                    
+                    <!-- Игра временно убрана -->
+                </div>
+            </div>
+            
+            <!-- Апгрейд -->
+            <div class="section" id="upgradeSection">
+                <div class="section-content">
+                    <h2>⚡ Апгрейд</h2>
+                    <p class="section-subtitle">Upgrade</p>
+                    
+                    <div class="upgrade-container">
+                        <div class="upgrade-slots">
+                            <h3 class="upgrade-title">Выберите подарки (до 3 шт):</h3>
+                            <div class="upgrade-slots-grid" id="upgradeSlots">
+                                <div class="upgrade-slot" onclick="selectUpgradeItem(0)">
+                                    <div class="slot-content" id="slot0">
+                                        <div class="slot-placeholder">+</div>
+                                    </div>
+                                </div>
+                                <div class="upgrade-slot" onclick="selectUpgradeItem(1)">
+                                    <div class="slot-content" id="slot1">
+                                        <div class="slot-placeholder">+</div>
+                                    </div>
+                                </div>
+                                <div class="upgrade-slot" onclick="selectUpgradeItem(2)">
+                                    <div class="slot-content" id="slot2">
+                                        <div class="slot-placeholder">+</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="upgrade-target">
+                            <h3 class="upgrade-title">Выберите желаемый подарок:</h3>
+                            <div class="upgrade-target-slot" onclick="selectTargetItem()">
+                                <div class="slot-content" id="targetSlot">
+                                    <div class="slot-placeholder">Выберите подарок</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="upgrade-wheel-container">
+                            <h3 class="upgrade-title">Шанс выигрыша:</h3>
+                            <div class="upgrade-wheel" id="upgradeWheel">
+                                <div class="wheel-content" id="wheelContent">
+                                    <!-- Колесо будет создано динамически -->
+                                </div>
+                                <div class="wheel-pointer">
+                                    <div class="pointer-circle"></div>
+                                </div>
+                            </div>
+                            <div class="wheel-chance" id="wheelChance">0%</div>
+                        </div>
+                        
+                        <button class="upgrade-spin-btn" id="upgradeSpinBtn" onclick="spinUpgrade()" disabled>
+                            <span class="spin-btn-text">Крутить</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно пополнения -->
+        <div class="modal" id="walletModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Пополнить баланс</h3>
+                    <button class="modal-close" onclick="closeWalletModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="top-up-buttons">
+                        <button class="top-up-btn" onclick="topUpBalance('stars')">
+                            <span class="top-up-icon">⭐</span>
+                            <div class="top-up-info">
+                                <span class="top-up-text">Звездами Telegram</span>
+                                <span class="top-up-desc">Пополнить через Telegram Stars</span>
+                            </div>
+                        </button>
+                        <button class="top-up-btn" onclick="topUpBalance('ton')">
+                            <span class="top-up-icon">💎</span>
+                            <div class="top-up-info">
+                                <span class="top-up-text">Криптовалюта ТОН</span>
+                                <span class="top-up-desc">Пополнить через TON кошелек</span>
+                            </div>
+                        </button>
+                        <button class="top-up-btn" onclick="topUpBalance('gifts')">
+                            <span class="top-up-icon">🎁</span>
+                            <div class="top-up-info">
+                                <span class="top-up-text">Подарками</span>
+                                <span class="top-up-desc">Обменять подарки на звезды</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно открытия кейса -->
+        <div class="case-modal" id="caseModal">
+            <div class="case-modal-content">
+                <div class="case-spinner-container">
+                    <div class="spinner-center-line-vertical"></div>
+                    <div class="case-spinner" id="caseSpinner">
+                        <!-- Подарки будут добавлены динамически -->
+                    </div>
+                </div>
+                <div class="case-result" id="caseResult" style="display: none;">
+                    <div class="result-icon" id="resultIcon">🎁</div>
+                    <div class="result-name" id="resultName">Вы выиграли!</div>
+                    <button class="result-btn" onclick="closeCaseModal()">Забрать</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Модальное окно выбора предмета для апгрейда -->
+        <div class="modal" id="itemSelectModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Выберите предмет</h3>
+                    <button class="modal-close" onclick="closeItemSelectModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="item-select-list" id="itemSelectList">
+                        <!-- Предметы будут добавлены динамически -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Модальное окно результата апгрейда -->
+        <div class="modal" id="upgradeResultModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="upgradeResultTitle">Результат</h3>
+                    <button class="modal-close" onclick="closeUpgradeResultModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="upgrade-result-content" id="upgradeResultContent">
+                        <!-- Результат будет добавлен динамически -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Нижняя навигация -->
+        <div class="bottom-nav">
+            <button class="nav-item active" data-section="inventory" onclick="switchSection('inventory')">
+                <div class="nav-icon">📦</div>
+                <div class="nav-label">Инвентарь</div>
+                <div class="nav-label-en">Inventory</div>
+            </button>
+            <button class="nav-item" data-section="cases" onclick="switchSection('cases')">
+                <div class="nav-icon">🎁</div>
+                <div class="nav-label">Кейсы</div>
+                <div class="nav-label-en">Cases</div>
+            </button>
+            <button class="nav-item" data-section="ladder" onclick="switchSection('ladder')">
+                <div class="nav-icon">🪜</div>
+                <div class="nav-label">Лесенка</div>
+                <div class="nav-label-en">Ladder</div>
+            </button>
+            <button class="nav-item" data-section="battles" onclick="switchSection('battles')">
+                <div class="nav-icon">⚔️</div>
+                <div class="nav-label">Битвы</div>
+                <div class="nav-label-en">Battles</div>
+            </button>
+            <button class="nav-item" data-section="bird" onclick="switchSection('bird')">
+                <div class="nav-icon">🏆</div>
+                <div class="nav-label">Конкурсы</div>
+                <div class="nav-label-en">Competitions</div>
+            </button>
+            <button class="nav-item" data-section="upgrade" onclick="switchSection('upgrade')">
+                <div class="nav-icon">⚡</div>
+                <div class="nav-label">Апгрейд</div>
+                <div class="nav-label-en">Upgrade</div>
+            </button>
+        </div>
+    </div>
+    <!-- Заглушки для функций ДО загрузки app.js -->
+    <script>
+        // КРИТИЧЕСКИ ВАЖНО: Заглушки должны быть определены ДО загрузки app.js
+        console.log('=== УСТАНОВКА ЗАГЛУШЕК ===');
+        
+        // Заглушка для switchSection
+        window.switchSection = function(sectionName) {
+            console.log('switchSection вызвана (заглушка):', sectionName);
+            try {
+                let section;
+                if (sectionName === 'casePageSection') {
+                    section = document.getElementById('casePageSection');
+                } else {
+                    section = document.getElementById(sectionName + 'Section');
+                }
+                if (section) {
+                    document.querySelectorAll('.section').forEach(s => {
+                        s.classList.remove('active');
+                        s.style.display = 'none';
+                    });
+                    section.classList.add('active');
+                    section.style.display = 'flex';
+                    
+                    // Обновляем навигацию
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    const navItem = document.querySelector('[data-section="' + sectionName + '"]');
+                    if (navItem) {
+                        navItem.classList.add('active');
+                    }
+                }
+            } catch (e) {
+                console.error('Ошибка в switchSection заглушке:', e);
+            }
+        };
+        
+        // Заглушка для openCasePage
+        window.openCasePage = function(caseType) {
+            console.log('openCasePage вызвана (заглушка):', caseType);
+            try {
+                const casePageSection = document.getElementById('casePageSection');
+                if (casePageSection) {
+                    document.querySelectorAll('.section').forEach(s => {
+                        s.classList.remove('active');
+                        s.style.display = 'none';
+                    });
+                    casePageSection.classList.add('active');
+                    casePageSection.style.display = 'flex';
+                }
+            } catch (e) {
+                console.error('Ошибка в openCasePage заглушке:', e);
+            }
+        };
+        
+        // Заглушки для других функций
+        window.showWalletMenu = function() { console.log('showWalletMenu (заглушка)'); };
+        window.updateBalance = function() { console.log('updateBalance (заглушка)'); };
+        window.diceAddStars = function() { console.log('diceAddStars (заглушка)'); };
+        window.startLadderGameFromInput = function() { console.log('startLadderGameFromInput (заглушка)'); };
+        window.wheelAddStars = function() { console.log('wheelAddStars (заглушка)'); };
+        window.wheelAddGift = function() { console.log('wheelAddGift (заглушка)'); };
+        window.wheelSubmitBet = function() { console.log('wheelSubmitBet (заглушка)'); };
+        window.mineboomAddStars = function() { console.log('mineboomAddStars (заглушка)'); };
+        window.mineboomAddGift = function() { console.log('mineboomAddGift (заглушка)'); };
+        window.stopLadderGame = function() { console.log('stopLadderGame (заглушка)'); };
+        window.switchBattlesMode = function(mode) { console.log('switchBattlesMode (заглушка):', mode); };
+        window.spinCase = function() { console.log('spinCase (заглушка)'); };
+        window.backToCases = function() { 
+            console.log('backToCases (заглушка)');
+            if (window.switchSection) {
+                window.switchSection('cases');
+            }
+        };
+        
+        console.log('✓ Заглушки установлены');
+        console.log('window.switchSection:', typeof window.switchSection);
+    </script>
+    <script src="app.js" defer></script>
+    <script>
+        // Инициализация после загрузки
+        (function() {
+            function hideSplashScreen() {
+                const splashScreen = document.getElementById('splashScreen');
+                const appContainer = document.getElementById('appContainer');
+                if (splashScreen && appContainer) {
+                    setTimeout(() => {
+                        splashScreen.classList.add('hidden');
+                        appContainer.style.display = 'block';
+                        setTimeout(() => {
+                            splashScreen.style.display = 'none';
+                        }, 500);
+                    }, 1000); // Показываем загрузочный экран минимум 1 секунду
+                }
+            }
+            
+            function initApp() {
+                console.log('=== ИНИЦИАЛИЗАЦИЯ ПРИЛОЖЕНИЯ ===');
+                const inventorySection = document.getElementById('inventorySection');
+                if (inventorySection) {
+                    document.querySelectorAll('.section').forEach(s => {
+                        s.classList.remove('active');
+                        s.style.display = 'none';
+                    });
+                    inventorySection.style.display = 'flex';
+                    inventorySection.classList.add('active');
+                }
+                
+                // Проверяем загрузку app.js
+                setTimeout(function() {
+                    console.log('=== ПРОВЕРКА ФУНКЦИЙ ===');
+                    console.log('window.switchSection:', typeof window.switchSection);
+                    console.log('window.openCasePage:', typeof window.openCasePage);
+                }, 2000);
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initApp);
+            } else {
+                setTimeout(initApp, 100);
+            }
+        })();
+    </script>
+</body>
+</html>

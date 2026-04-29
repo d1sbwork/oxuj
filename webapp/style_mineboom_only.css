@@ -1,0 +1,202 @@
+/* ========== MINEBOOM GAME STYLES ========== */
+.mineboom-section-content {
+    background: #1a1a2e;
+    min-height: 100vh;
+    padding: 16px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.mineboom-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.mineboom-tnt-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 600px;
+}
+
+.mineboom-tnt-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.mineboom-tnt-block:hover {
+    transform: translateY(-5px);
+}
+
+.mineboom-tnt-block.selected {
+    transform: translateY(-10px) scale(1.05);
+}
+
+.mineboom-tnt-block.selected .mineboom-tnt {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    animation: mineboom-pulse 1s infinite;
+}
+
+.mineboom-tnt-block.exploded {
+    animation: mineboom-explode 0.5s ease-out;
+}
+
+@keyframes mineboom-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes mineboom-explode {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.8; }
+    100% { transform: scale(2); opacity: 0; }
+}
+
+.mineboom-base {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.mineboom-base-dirt {
+    background: linear-gradient(135deg, #8B4513 0%, #654321 50%, #8B4513 100%);
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
+}
+
+.mineboom-base-stone {
+    background: linear-gradient(135deg, #808080 0%, #696969 50%, #808080 100%);
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.2) 3px, rgba(0,0,0,0.2) 6px),
+        repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.2) 3px, rgba(0,0,0,0.2) 6px);
+}
+
+.mineboom-base-wood {
+    background: linear-gradient(135deg, #DEB887 0%, #CD853F 50%, #DEB887 100%);
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0,0,0,0.15) 4px, rgba(0,0,0,0.15) 8px);
+}
+
+.mineboom-tnt {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #ff0000 0%, #cc0000 50%, #ff0000 100%);
+    border: 3px solid #fff;
+    border-radius: 4px;
+    position: relative;
+    margin-top: -5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.mineboom-tnt::before {
+    content: 'TNT';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+.mineboom-star-card {
+    width: 50px;
+    height: 70px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+    border: 2px solid #FF8C00;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    position: relative;
+    animation: mineboom-float 2s ease-in-out infinite;
+}
+
+@keyframes mineboom-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.mineboom-star-icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.mineboom-star-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #8B4513;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.mineboom-countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    z-index: 10;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #FFD700;
+}
+
+.mineboom-info {
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    margin-top: 20px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+}
+
+.mineboom-bet-controls {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.mineboom-add-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.mineboom-participants {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.battle-card-mineboom {
+    background: linear-gradient(90deg, #8B4513, #CD853F);
+}

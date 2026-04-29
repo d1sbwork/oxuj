@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка изображений подарков Telegram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .gift-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        .gift-preview {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .status {
+            margin-left: auto;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .status.loading { background: #ffa500; }
+        .status.success { background: #4CAF50; }
+        .status.error { background: #f44336; }
+    </style>
+</head>
+<body>
+    <h1>Загрузка изображений подарков Telegram</h1>
+    <p>Этот скрипт поможет загрузить изображения подарков из различных источников.</p>
+    <button onclick="downloadAllImages()">Загрузить все изображения</button>
+    <div id="giftsList"></div>
+
+    <script>
+        const gifts = [
+            'Heart Locket', 'Plush Pepe', 'Heroic Helmet', 'Mighty Arm', 'Ion Gem',
+            'Durov\'s Cap', 'Nail Bracelet', 'Perfume Bottle', 'Magic Potion', 'Mini Oscar',
+            'Astral Shard', 'Artisan Brick', 'Gem Signet', 'Sharp Tongue', 'Moon Pendant',
+            'Lunar Snake', 'Holiday Drink', 'Record Player', 'Joyful Bundle', 'Restless Jar',
+            'Big Year', 'Light Sword', 'Jingle Bells', 'Eternal Candle', 'Skull Flower',
+            'Sakura Flower'
+        ];
+
+        function getFileName(giftName) {
+            return giftName
+                .replace(/'/g, '')
+                .replace(/\s+/g, '_')
+                .toLowerCase();
+        }
+
+        function createGiftItem(giftName) {
+            const fileName = getFileName(giftName);
+            const div = document.createElement('div');
+            div.className = 'gift-item';
+            div.innerHTML = `
+                <img src="images/gifts/${fileName}.png" class="gift-preview" alt="${giftName}" onerror="this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\'><text>?</text></svg>'">
+                <span>${giftName}</span>
+                <span class="status" id="status-${fileName}">Ожидание</span>
+            `;
+            return div;
+        }
+
+        function init() {
+            const list = document.getElementById('giftsList');
+            gifts.forEach(gift => {
+                list.appendChild(createGiftItem(gift));
+            });
+        }
+
+        async function downloadImage(giftName) {
+            const fileName = getFileName(giftName);
+            const statusEl = document.getElementById(`status-${fileName}`);
+            
+            // Источники для поиска изображений
+            const sources = [
+                `https://giftsgram.com/gifts/${fileName}.png`,
+                `https://tgsupergift.com/images/${fileName}.png`,
+                `https://api.telegram.org/file/bot/gift/${fileName}.png`
+            ];
+
+            statusEl.textContent = 'Загрузка...';
+            statusEl.className = 'status loading';
+
+            for (const source of sources) {
+                try {
+                    const response = await fetch(source, { mode: 'no-cors' });
+                    // Из-за CORS мы не можем проверить ответ напрямую
+                    // Но можем попробовать создать изображение
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    
+                    await new Promise((resolve, reject) => {
+                        img.onload = () => {
+                            // Создаем canvas для конвертации
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0);
+                            
+                            // Конвертируем в blob
+                            canvas.toBlob((blob) => {
+                                const url = URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = `${fileName}.png`;
+                                a.click();
+                                URL.revokeObjectURL(url);
+                                
+                                statusEl.textContent = 'Загружено';
+                                statusEl.className = 'status success';
+                                resolve();
+                            });
+                        };
+                        img.onerror = reject;
+                        img.src = source;
+                    });
+                    
+                    return;
+                } catch (e) {
+                    continue;
+                }
+            }
+            
+            statusEl.textContent = 'Не найдено';
+            statusEl.className = 'status error';
+        }
+
+        async function downloadAllImages() {
+            for (const gift of gifts) {
+                await downloadImage(gift);
+                await new Promise(resolve => setTimeout(resolve, 500)); // Задержка между загрузками
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
+
+
+
