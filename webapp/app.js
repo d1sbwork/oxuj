@@ -188,6 +188,10 @@
             }
         }, 100);
     };
+
+    window.arenaAddStars = function() {
+    console.log("arenaAddStars заглушка");
+}
     
     // Инициализация Telegram Web App (с проверкой)
     let tg;
@@ -7033,7 +7037,9 @@
     window.wheelAddGift = wheelAddGift;
     window.wheelSubmitBet = wheelSubmitBet;
     window.diceAddGift = diceAddGift;
-    window.arenaAddStars = arenaAddStars;
+   window.arenaAddStars = function() {
+    console.log("arenaAddStars заглушка");
+}
     window.mineboomAddStars = mineboomAddStars;
     window.mineboomAddGift = mineboomAddGift;
     window.mineboomSelectTNT = mineboomSelectTNT;
